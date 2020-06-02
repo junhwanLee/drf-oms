@@ -1,0 +1,42 @@
+version: '3' 
+services: 
+  mysql_master:
+    image: mysql:5.7
+    env_file:
+      - ./mysql/master/mysql_master.env
+    container_name: "mysql_master"
+    restart: "no"
+    ports:
+      - 4406:3306
+    volumes:
+      - ./mysql/master/conf/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./mysql/master/data:/var/lib/mysql
+
+  mysql_slave:
+    image: mysql:5.7
+    env_file:
+      - ./mysql/slave/mysql_slave.env
+    container_name: "mysql_slave"
+    restart: "no"
+    ports:
+      - 5506:3306
+    depends_on:
+      - mysql_master
+    volumes:
+      - ./mysql/slave/conf/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./mysql/slave/data:/var/lib/mysql
+
+  django:
+    build: ./django
+    environment: 
+      - GUNICORN_BIND_IP=0.0.0.0
+      - GUNICORN_BIND_PORT=8080
+      - GUNICORN_WORKERS=5
+      - GUNICORN_THREADS=2
+      - GUNICORN_LOG_FILE=/src/gunicorn.log
+      - GUNICORN_LOG_LEVEL=debug
+      - GUNICORN_TIMEOUT=10
+    ports: 
+      - "8080:8080"
+    links: 
+      - mysql_master

@@ -1,0 +1,18 @@
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+[mysqld]
+
+skip-host-cache
+skip-name-resolve
+
+server-id=2
+relay-log = /var/log/mysql/mysql-relay-bin.log
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = mydb
+
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
