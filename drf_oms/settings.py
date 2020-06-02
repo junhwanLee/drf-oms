@@ -31,16 +31,16 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'orders',
     'rest_framework',
     'knox'
+    'accounts',
+    'orders',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
