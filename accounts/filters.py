@@ -6,4 +6,4 @@ from .models import *
 class UserFilter(d_filters.FilterSet):
     class Meta:
         model = User
-        fields = ['email', 'gender']
+        fields = ['email', 'name']
