@@ -13,6 +13,7 @@ Django Rest Framework 기반의 사용자 회원 가입 및 주문 정보를 관
 * docker 
 * docker-compose 
 
+
 #### 소스 다운로드 및 구조 
 
 소스는 django 소스 구조를 갖고 있으며, docker directory 를 통해 app 배포 합니다. 
@@ -28,6 +29,7 @@ $ find ./ -maxdepth 1
 ./docker   # docker-compose 관련 directory 
 ```
 
+
 #### django 패키지
 
 아래와 같은 패키지로 django 인증 및 backend 구성 됩니다. 
@@ -40,6 +42,7 @@ django-rest-knox			# token 기반의 사용자 인증
 django-filter
 mysqlclient
 ```
+
 
 #### container 환경 
 
@@ -64,6 +67,7 @@ services:
 ```
 
 Mysql 의 경우  각 ./mysql/master, ./mysql/slave 를 loclahost mount 하여 볼륨 구성 
+
 
 ### Intallation
 
