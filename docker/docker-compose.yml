@@ -36,6 +36,12 @@ services:
       - GUNICORN_LOG_FILE=/src/gunicorn.log
       - GUNICORN_LOG_LEVEL=debug
       - GUNICORN_TIMEOUT=10
+      - DB_DEFAULT_ENGINE=django.db.backends.mysql
+      - DB_DEFAULT_HOST=mysql_master
+      - DB_DEFAULT_NAME=mydb
+      - DB_DEFAULT_USER=root
+      - DB_DEFAULT_PASSWORD=111
+      - DB_DEFAULT_PORT=3306
     ports: 
       - "8080:8080"
     links: 
