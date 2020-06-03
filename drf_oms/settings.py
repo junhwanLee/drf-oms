@@ -92,15 +92,16 @@ WSGI_APPLICATION = 'drf_oms.wsgi.application'
 #     }
 # }
 DATABASES = {
-    'default' : {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb',
-        'USER': 'root',
-        'PASSWORD': '111',
-        'HOST': 'mysql_master',
-        'PORT': '3306',
+    'default': {
+        'ENGINE': os.environ.get('DB_DEFAULT_ENGINE'),
+        'NAME': os.environ.get('DB_DEFAULT_NAME'),
+        'USER': os.environ.get('DB_DEFAULT_USER'),
+        'PASSWORD': os.environ.get('DB_DEFAULT_PASSWORD'),
+        'HOST': os.environ.get('DB_DEFAULT_HOST'),
+        'PORT': os.environ.get('DB_DEFAULT_PORT'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
