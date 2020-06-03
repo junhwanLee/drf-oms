@@ -20,7 +20,7 @@ RUN apt-get update && \
     procps && \
     rm -rf /var/lib/apt/lists/*
 
-RUN git clone -b develope https://github.com/junhwanLee/drf-oms.git /src 
+RUN git clone https://github.com/junhwanLee/drf-oms.git /src 
 RUN mkdir /config
 RUN pip install -U pip
 RUN pip install -r /src/requirements.txt && pip install gunicorn
