@@ -9,4 +9,4 @@ class Order(models.Model):
     paymented_at= models.DateTimeField(auto_now_add=True, verbose_name='결제일시')
 
     def __str__(self):
-        return "{}-{}".format(customer.email, self.product_name)
+        return "{}-{}".format(self.customer.email, self.product_name)

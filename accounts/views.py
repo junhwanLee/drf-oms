@@ -34,10 +34,10 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_backends = (
         DjangoFilterBackend,
         filters.OrderingFilter,
-        filters.SearchFilter
+        filters.SearchFilter,
     )
     filter_class = UserFilter
-    search_fields = ('email', 'name')
+    search_fields = ('email', 'name',)
 
     def get_object(self):
         obj = get_object_or_404(get_user_model(), pk=self.kwargs["pk"])
