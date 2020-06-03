@@ -146,6 +146,6 @@ curl --location --request GET 'http://localhost:8080/orders/' \
 
 # search param 에 이메일 또는 이름으로 검색
 # last_order 필드에 마지막 주문목록이 노출 됨.
-curl --location --request GET 'http://localhost:8080/accounts/users?search=test.com' \
---header 'Authorization: Token 'USER2_TOKEN'' \
+curl --location --request GET 'http://localhost:8080/accounts/users?search=sungi' \
+--header 'Authorization: Token '$USER2_TOKEN'' \
 --data-raw ''

@@ -1,6 +1,10 @@
-### DRF 
+## DRF 기반 회원 가입 및 주문관리 
+
+Django Rest Framework 기반의 사용자 회원 가입 및 주문 정보를 관리하는 backend 이며, Mysql replication 으로 구성됨. 
 
 
+
+### 구성
 
 #### Requirements 
 
@@ -8,15 +12,62 @@
 
 * docker 
 * docker-compose 
-* pip
-* curl
-* jq 
 
+#### 소스 다운로드 및 구조 
 
+소스는 django 소스 구조를 갖고 있으며, docker directory 를 통해 app 배포 합니다. 
 
-#### Installation 
+```
+$ git clone https://github.com/junhwanLee/drf-oms.git
+$ cd drf-oms 
+$ find ./ -maxdepth 1 
+./accounts   # django accounts App 
+./manage.py 
+./orders     # django orders App 
+./drf_oms    # django main directory 
+./docker   # docker-compose 관련 directory 
+```
 
-build.sh 스크립트를 이용하여 mysql 및 django 이미지 배포 
+#### django 패키지
+
+아래와 같은 패키지로 django 인증 및 backend 구성 됩니다. 
+
+```
+$ cat requirements.txt 
+django	# django 
+djangorestframework 	# drf 
+django-rest-knox			# token 기반의 사용자 인증 
+django-filter
+mysqlclient
+```
+
+#### container 환경 
+
+![structure](./images/env.png)
+
+본 환경에서는 총 3개의 container를 이용하여 배포를 진행 합니다. 
+
+```
+$ cd docker 
+$ cat docker-compose.yml 
+version: '3' 
+services: 
+  mysql_master:
+    image: mysql:5.7
+		...
+  mysql_slave:
+    image: mysql:5.7
+    ...
+  django:
+    build: ./django
+    ...
+```
+
+Mysql 의 경우  각 ./mysql/master, ./mysql/slave 를 loclahost mount 하여 볼륨 구성 
+
+### Intallation
+
+<strong>build.sh</strong> 스크립트를 이용하여 mysql 및 django 이미지를 배포 및 mysql master slave 구성을 진행 합니다. 
 
 ```
 $ sh build.sh 
@@ -46,16 +97,24 @@ $ docker ps
 ed3e9678e0fc        mysql:5.7           "docker-entrypoint.s…"   12 minutes ago      Up 12 minutes       33060/tcp, 0.0.0.0:4406->3306/tcp   mysql_master
 
 
-$ docker exec -it 8b8469992126 bash 
+$ docker exec -it 8b8469992126<django conatiner ID> bash 
 root@8b8469992126:/src# python manage.py makemigrations accounts orders 
 root@8b8469992126:/src# python manage.py migrate 
 ```
 
 
 
-#### 검증 
+### 검증
 
-curl 명령어를 통해 회원가입, 로그인, 주문목록 조회, 회원 조희 등에 대해 검증 합니다. <strong>poc.sh</strong> 스크립트를 실행 
+<strong>poc.sh</strong> 스크립트(curl 명령어)를 통해 회원가입, 로그인, 주문목록 조회, 회원 조희 등에 대해 검증 합니다. 해당 스크립트에서는 아래 항목들을 curl 요청을 통해 검증을 진행 합니다. 
+
+* 회원 가입 
+* 회원 로그인 
+* 주문목록 등록 
+* 회원로그아웃 
+* 단일 회원 상세 정보 조회 
+* 단일 회원 주문 목록 조회 
+* 여러 회원 목록 조회 
 
 ```
 $ sh poc.sh 
@@ -65,9 +124,23 @@ $ sh poc.sh
 
 
 
-mysql master slave replication 확인 
+#### mysql replication 
 
-#### 참조 
+```
+$ docker exec -it mysql_master mysql -u root -p 
+mysql> select * from mydb.accounts_user; 
+```
+
+```
+$ docker exec -it mysql_slave mysql -u root -p 
+mysql> select * from mydb.accounts_user; 
+```
+
+ master와 slave 사이에 동기화 확인 
+
+
+
+### 참조 
 
 * django-rest-knox : https://github.com/James1345/django-rest-knox 
 * mysql master slave : https://github.com/vbabak/docker-mysql-master-slave 
