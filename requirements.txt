@@ -3,3 +3,4 @@ djangorestframework
 django-rest-knox
 django-filter
 mysqlclient
+drf-yasg

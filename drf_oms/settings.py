@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'knox',
-    'orders'
+    'orders',
+    'drf_yasg'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
